@@ -1,0 +1,48 @@
+services:
+  backend:
+    container_name: docker-backend
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Docker/DockerfileDev
+    environment:
+        NODE_ENV: ${NODE_ENV}
+        PORT: ${PORT}
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_NAME: ${DB_NAME}
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./test:/app/test
+      - ./jest.config.js:/app/jest.config.js
+    command: ["npm", "run", "dev"]
+  db:
+    container_name: docker-database
+    restart: always
+    user: ${DB_USER}
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  pgdata:
