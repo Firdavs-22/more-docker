@@ -1,0 +1,187 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.3s ease;
+    padding: 10px 0;
+}
+
+.todo-item:last-child {
+    border-bottom: none;
+}
+
+.todo-item:hover {
+    background-color: #f8f9fa;
+}
+
+#show-add-modal {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+}
+
+.todo-item span {
+    flex: 1;
+    font-size: 16px;
+    color: #495057;
+}
+
+.todo-item .description {
+    flex: 2;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.todo-item button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: opacity 0.3s ease;
+}
+
+.todo-item button.complete-button {
+    background-color: #28a745;
+}
+
+.todo-item button.update-button {
+    background-color: #ffc107;
+}
+
+.todo-item button.delete-button {
+    background-color: #dc3545;
+}
+
+.todo-item button:hover {
+    opacity: 0.8;
+}
+
+.todo-item.completed span {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+.error {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #343a40;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.modal-content input[type="text"], .modal-content textarea {
+    width: 97%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.modal-content textarea {
+    resize: vertical;
+}
+
+.modal-content button {
+    width:  100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+.modal-content .delete-button {
+    background-color: #dc3545;
+}
+
+.modal-content .delete-button:hover {
+    background-color: #c82333;
+}
+
+.delete-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
