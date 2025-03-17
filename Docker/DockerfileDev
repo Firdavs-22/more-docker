@@ -1,11 +1,15 @@
 FROM node:18
 
+ARG SSH_ROOT_PASSWORD
+ARG SSH_USER
+ARG SSH_USER_PASSWORD
+
 RUN apt-get update && apt-get install -y openssh-server
 
 RUN mkdir /var/run/sshd
-RUN useradd -m -s /bin/bash noroot && \
-    echo "noroot:password" | chpasswd
-RUN echo "root:nopedro" | chpasswd
+RUN useradd -m -s /bin/bash $SSH_USER && \
+    echo "${SSH_USER}:${SSH_USER_PASSWORD}" | chpasswd
+RUN echo "root:${SSH_ROOT_PASSWORD}" | chpasswd
 
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config

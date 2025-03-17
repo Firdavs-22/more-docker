@@ -5,6 +5,10 @@ services:
     build:
       context: .
       dockerfile: ./Docker/DockerfileDev
+      args:
+        SSH_ROOT_PASSWORD: ${SSH_ROOT_PASSWORD}
+        SSH_USER: ${SSH_USER}
+        SSH_USER_PASSWORD: ${SSH_USER_PASSWORD}
     environment:
         NODE_ENV: ${NODE_ENV}
         PORT: ${PORT}
@@ -15,7 +19,7 @@ services:
         DB_NAME: ${DB_NAME}
     ports:
       - "${PORT}:${PORT}"
-      - "22:22"
+      - "${SSH_PORT}:22"
     depends_on:
       db:
         condition: service_healthy
