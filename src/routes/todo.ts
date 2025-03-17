@@ -23,7 +23,7 @@ router.get("/", async (_req:Request,res:Response) => {
 
 router.get("/:id", async (req:Request,res:Response) => {
     try {
-        if (!req.params.id) {
+        if (!req.params.id || isNaN(Number(req.params.id))) {
             res.status(HttpStatus.BAD_REQUEST).json({
                 message: "id is required",
             }).end();
@@ -91,7 +91,7 @@ router.post("/", async (req:Request,res:Response) => {
 
 router.put("/:id", async (req:Request,res:Response) => {
     try {
-        if (!req.params.id) {
+        if (!req.params.id || isNaN(Number(req.params.id))) {
             res.status(HttpStatus.BAD_REQUEST).json({
                 message: "id is required",
             }).end();
@@ -139,11 +139,51 @@ router.put("/:id", async (req:Request,res:Response) => {
     }
 });
 
-router.delete("/:id", async (req:Request,res:Response) => {
+router.patch("/:id/complete", async (req:Request,res:Response) => {
     try {
-        if (!req.params.id) {
+        if (!req.params.id || isNaN(Number(req.params.id))) {
             res.status(HttpStatus.BAD_REQUEST).json({
                 message: "id is required",
+            }).end();
+            return;
+        }
+
+        const completedTodo:Todo | null = await TodoModel.complete(Number(req.params.id));
+
+        if (!completedTodo) {
+            res.status(HttpStatus.NOT_FOUND).json({
+                message: "todo not found",
+            }).end();
+            return;
+        }
+
+        res.status(HttpStatus.OK).json({
+            message: "success",
+            todo: completedTodo
+        }).end();
+        return;
+    } catch (e) {
+        console.error("Error in PUT /todos/:id", e);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            message: "failed",
+        }).end();
+        return;
+    }
+})
+
+router.delete("/:id", async (req:Request,res:Response) => {
+    try {
+        if (!req.params.id || isNaN(Number(req.params.id))) {
+            res.status(HttpStatus.BAD_REQUEST).json({
+                message: "id is required",
+            }).end();
+            return;
+        }
+
+        const todo:Todo | null = await TodoModel.getById(Number(req.params.id));
+        if (!todo) {
+            res.status(HttpStatus.NOT_FOUND).json({
+                message: "todo not found",
             }).end();
             return;
         }

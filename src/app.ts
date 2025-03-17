@@ -1,15 +1,11 @@
-import express,{Request,Response} from 'express';
-import TodoRoute from './routes/todo';
+import express from 'express';
+import ApiRoutes from './routes';
+import path from 'path';
 
 const app = express();
 app.use(express.json());
 
-app.get('/', async (_req: Request, res: Response) => {
-    res.status(200).json({
-        message: 'Main route',
-    });
-    return;
-});
-app.use('/todos', TodoRoute);
+app.use('/api', ApiRoutes);
+app.use(express.static(path.join(__dirname, 'public')));
 
 export default app;

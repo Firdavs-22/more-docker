@@ -30,7 +30,7 @@ class Database {
             await this.connect();
         }
         try {
-            console.log(text, params);
+            // console.log(text, params);
             const result = await this.client.query(text, params);
             return result.rows as T[];
         } catch (e) {

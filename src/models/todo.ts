@@ -21,7 +21,7 @@ export interface TodoUpdate {
 
 class TodoModel {
     public async getAll(): Promise<Todo[]>{
-        const query = 'SELECT * FROM todos;';
+        const query = 'SELECT * FROM todos ORDER BY created_at DESC;';
         return await db.query<Todo>(query);
     }
 
@@ -38,8 +38,14 @@ class TodoModel {
     }
 
     public async update(id: number, todo: TodoUpdate): Promise<Todo|null> {
-        const query = 'UPDATE todos SET title = $1, description = $2, completed = $3, update_at WHERE id = $4 RETURNING *;';
+        const query = 'UPDATE todos SET title = $1, description = $2, completed = $3, updated_at = NOW() WHERE id = $4 RETURNING *;';
         const result = await db.query<Todo>(query, [todo.title, todo.description, todo.completed, id]);
+        return result.length ? result[0] : null;
+    }
+
+    public async complete(id: number): Promise<Todo|null> {
+        const query = 'UPDATE todos SET completed = true, completed_at = NOW() WHERE id = $1 RETURNING *;';
+        const result = await db.query<Todo>(query, [id]);
         return result.length ? result[0] : null;
     }
 

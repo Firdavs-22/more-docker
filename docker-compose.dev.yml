@@ -15,6 +15,7 @@ services:
         DB_NAME: ${DB_NAME}
     ports:
       - "${PORT}:${PORT}"
+      - "22:22"
     depends_on:
       db:
         condition: service_healthy
@@ -25,7 +26,6 @@ services:
       - ./package-lock.json:/app/package-lock.json
       - ./test:/app/test
       - ./jest.config.js:/app/jest.config.js
-    command: ["npm", "run", "dev"]
   db:
     container_name: docker-database
     restart: always

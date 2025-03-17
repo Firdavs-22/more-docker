@@ -6,8 +6,7 @@
     "dev": "nodemon --legacy-watch src/index.ts",
     "test": "jest",
     "docker:dev-compose": "docker-compose -f docker-compose.dev.yml --env-file .env.development up",
-    "docker:clean": "(docker rm docker-backend docker-database docker-test-database docker-backend-test || true) && (docker rmi docker-project-backend docker-project-test || true) && (docker volume rm docker-project_pgdata || true)",
-    "docker:test": "docker-compose -f docker-compose.test.yml --env-file .env.test up"
+    "docker:clean": "(docker rm docker-backend docker-database || true) && (docker rmi docker-project-backend || true) && (docker volume rm docker-project_pgdata || true)"
   },
   "keywords": [],
   "author": "Firdavs-22",
