@@ -23,6 +23,8 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕️add alias for folders in tsconfig
 // ⭕️change code to controller pattern
 // ⭕️move test to src folder and do in ts
+// fix the readme file
+
 
 // add jwt authorization
 // create new table for users
