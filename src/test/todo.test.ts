@@ -1,7 +1,11 @@
+import dotenv from 'dotenv';
 import request from "supertest";
-import app from "../dist/app";
-import { HttpStatus } from "../dist/enums/httpStatus";
 import { describe, it, expect } from "@jest/globals";
+
+dotenv.config({ path: './.env.test' });
+
+import app from "@app";
+import { HttpStatus } from "@enums/httpStatus";
 
 describe("Todo API", () => {
     let todoId = 0;

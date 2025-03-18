@@ -1,20 +1,19 @@
 module.exports = {
     preset: "ts-jest",
     testEnvironment: "node",
-    roots: ["<rootDir>/dist"],
-    testPathIgnorePatterns: ["/node_modules/"],
-    testMatch: ["**/*.test.js", "**/*.test.ts"],
-    transform: {
-        "^.+\\.tsx?$": "ts-jest"
-    },
+    roots: ["."],
+    testPathIgnorePatterns: ["/node_modules/",",/dist/"],
+    testMatch: ["**/*.test.ts"],
     moduleNameMapper: {
-        "^@routes$": "<rootDir>/dist/routes",
-        "^@logger$": "<rootDir>/dist/utils/logger",
-        "^@db$": "<rootDir>/dist/db",
-        "^@models$": "<rootDir>/dist/models",
-        "^@utils$": "<rootDir>/dist/utils",
-        "^@enums$": "<rootDir>/dist/enums",
-        "^@controllers$": "<rootDir>/dist/controllers",
-        "^@app$": "<rootDir>/dist/app"
+        '^@app$': '<rootDir>/src/app',
+        '^@enums/(.*)$': '<rootDir>/src/enums/$1',
+        '@logger': '<rootDir>/src/utils/logger/',
+        '@db': '<rootDir>/src/db/',
+        '^@models/(.*)$': '<rootDir>/src/models/$1',
+        '@routes': '<rootDir>/src/routes/',
+        '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+        '^@controllers/(.*)$': '<rootDir>/src/controllers/$1',
+        '^@/(.*)$': '<rootDir>/src/$1'
     }
-};
+}
+

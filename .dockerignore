@@ -1,8 +1,7 @@
 **/.env
-**/.env.local
-**/.env.development
-**/.env.test
+**/.env.example
 **/.env.production
+**/.env.development
 **/node_modules
 **/build
 **/dist
