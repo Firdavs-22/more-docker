@@ -10,12 +10,12 @@ app.use('/api', ApiRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((err: any, _req:Request, res:Response, _next:NextFunction) => {
+
+app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
     logger.error("Error handler", err);
-    res.status(500).json({
-        message: "Internal server error",
+    return res.status(500).json({
+        message: "Internal server error"
     }).end()
-    return
 });
 
 // ⭕️added the logger it s winston with daily rotation
@@ -24,8 +24,6 @@ app.use((err: any, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕️change code to controller pattern
 // ⭕️move test to src folder and do in ts
 
-
-// add types to routes responses
 // add jwt authorization
 // create new table for users
 // add the user service
