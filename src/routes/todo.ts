@@ -1,10 +1,11 @@
 import {Router,Request,Response,} from "express";
-import TodoModel,{Todo} from "../models/todo";
-import {HttpStatus} from "../enums/httpStatus"
+import TodoModel,{Todo} from "@models/todo";
+import {HttpStatus} from "@enums/httpStatus"
+import logger from "@logger";
 
 const router = Router();
 
-router.get("/", async (_req:Request,res:Response) => {
+router.get("/", async (_req:Request, res:Response) => {
     try {
         const todos:Todo[] = await TodoModel.getAll();
         res.status(HttpStatus.OK).json({
@@ -13,7 +14,7 @@ router.get("/", async (_req:Request,res:Response) => {
         }).end();
         return;
     } catch (e) {
-        console.error("Error in GET /todos", e);
+        logger.error("Error in GET /todos", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();
@@ -42,7 +43,7 @@ router.get("/:id", async (req:Request,res:Response) => {
         }).end()
         return;
     } catch (e) {
-        console.error("Error in GET /todos/:id", e);
+        logger.error("Error in GET /todos/:id", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();
@@ -81,7 +82,7 @@ router.post("/", async (req:Request,res:Response) => {
         }).end();
         return;
     } catch (e) {
-        console.error("Error in POST /todos", e);
+        logger.error("Error in POST /todos", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();
@@ -131,7 +132,7 @@ router.put("/:id", async (req:Request,res:Response) => {
         }).end();
         return;
     } catch (e) {
-        console.error("Error in PUT /todos/:id", e);
+        logger.error("Error in PUT /todos/:id", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();
@@ -163,7 +164,7 @@ router.patch("/:id/complete", async (req:Request,res:Response) => {
         }).end();
         return;
     } catch (e) {
-        console.error("Error in PUT /todos/:id", e);
+        logger.error("Error in PUT /todos/:id", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();
@@ -193,7 +194,7 @@ router.delete("/:id", async (req:Request,res:Response) => {
         res.status(HttpStatus.NO_CONTENT).end();
         return;
     } catch (e) {
-        console.error("Error in DELETE /todos/:id", e);
+        logger.error("Error in DELETE /todos/:id", e);
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             message: "failed",
         }).end();

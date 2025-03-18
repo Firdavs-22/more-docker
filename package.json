@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon --legacy-watch src/index.ts",
     "test": "jest",
+    "build": "tsc && tsc-alias",
     "docker:dev-compose": "docker-compose -f docker-compose.dev.yml --env-file .env.development up",
     "docker:clean": "(docker rm docker-backend docker-database || true) && (docker rmi docker-project-backend || true) && (docker volume rm docker-project_pgdata || true)"
   },
@@ -23,10 +24,14 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.11",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.2"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "pg": "^8.14.0"
+    "pg": "^8.14.0",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   }
 }

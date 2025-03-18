@@ -1,4 +1,5 @@
 import {Pool, PoolClient} from "pg";
+import logger from "@logger";
 
 class Database {
     private client!: PoolClient;
@@ -8,7 +9,7 @@ class Database {
         this.pool = new Pool({
             user: process.env.DB_USER,
             host: process.env.DB_HOST,
-            database: process.env.DB_DATABASE,
+            database: process.env.DB_NAME,
             password: process.env.DB_PASSWORD,
             port: Number(process.env.DB_PORT) || 5432,
         })
@@ -17,24 +18,24 @@ class Database {
     private async connect(): Promise<void> {
         try {
             this.client = await this.pool.connect();
-            console.log("Connected to database");
+            logger.info("Connected to database");
         } catch (e) {
-            console.error("Error connecting to database", e);
+            logger.error("Error connecting to database", e);
             throw e;
         }
     }
 
     public async query<T>(text: string, params?: any[]): Promise<T[]> {
         if (!this.client) {
-            console.log("Connecting to database...");
+            logger.info("Connecting to client");
             await this.connect();
         }
         try {
-            // console.log(text, params);
+            logger.debug("SQL Query", {text, params});
             const result = await this.client.query(text, params);
             return result.rows as T[];
         } catch (e) {
-            console.error("Error executing query", e);
+            logger.error("Error executing query", e);
             throw e;
         }
     }
@@ -43,7 +44,7 @@ class Database {
         try {
             await this.query(query);
         } catch (e) {
-            console.error("Error creating table", e);
+            logger.error("Error creating table", e);
             throw e;
         }
     }
@@ -66,9 +67,9 @@ const DB = new Database();
 
     try {
         await DB.createTable(query);
-        console.log("Todos table created or already exists");
+        logger.info("Todos table created if it didn't exist");
     } catch (e) {
-        console.error("Error creating todos table", e);
+        logger.error("Error creating todos table", e);
     }
 })()
 

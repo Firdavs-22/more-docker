@@ -7,6 +7,32 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "paths": {
+      "@*": [
+        "src/*"
+      ],
+      "@logger": [
+        "src/utils/logger"
+      ],
+      "@db": [
+        "src/db"
+      ],
+      "@models": [
+        "src/models"
+      ],
+      "@routes": [
+        "src/routes"
+      ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@enums": [
+        "src/enums"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
 }
