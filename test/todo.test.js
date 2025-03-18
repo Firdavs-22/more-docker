@@ -1,10 +1,10 @@
 import request from "supertest";
-import app from "../src/app";
-import { HttpStatus } from "../src/enums/httpStatus";
+import app from "../dist/app";
+import { HttpStatus } from "../dist/enums/httpStatus";
 import { describe, it, expect } from "@jest/globals";
 
 describe("Todo API", () => {
-    let todoId: number = 0;
+    let todoId = 0;
     it("should return 200 and an array when getting all todos", async () => {
         const response = await request(app).get("/api/todos");
         expect(response.status).toBe(HttpStatus.OK);

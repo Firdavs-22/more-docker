@@ -8,27 +8,34 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
     "paths": {
       "@*": [
-        "src/*"
+        "./src/*"
       ],
       "@logger": [
-        "src/utils/logger"
+        "./src/utils/logger"
       ],
       "@db": [
-        "src/db"
+        "./src/db"
       ],
       "@models": [
-        "src/models"
+        "./src/models"
       ],
       "@routes": [
-        "src/routes"
+        "./src/routes"
       ],
       "@utils": [
-        "src/utils"
+        "./src/utils"
       ],
       "@enums": [
-        "src/enums"
+        "./src/enums"
+      ],
+      "@controllers": [
+        "./src/controllers"
+      ],
+      "@app": [
+        "./src/app"
       ]
     }
   },

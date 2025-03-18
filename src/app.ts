@@ -21,7 +21,10 @@ app.use((err: any, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕️added the logger it s winston with daily rotation
 // ⭕️add the error handler
 // ⭕️add alias for folders in tsconfig
-// change code to service pattern
+// ⭕️change code to controller pattern
+// move test to src folder and do in ts
+// add types to routes responses
+
 // add jwt authorization
 // create new table for users
 // add the user service
