@@ -4,9 +4,15 @@ import logger from "@logger";
 import {HttpStatus} from "@enums/httpStatus";
 
 class TodoController {
-    public async getAll(_req: Request, res: Response): Promise<any> {
+    public async getAll(req: Request, res: Response): Promise<any> {
         try {
-            const todos: TodoType[] = await TodoModel.getAll();
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
+
+            const todos: TodoType[] = await TodoModel.getAll(req.user.id);
             return res.status(HttpStatus.OK).json({
                 message: "success",
                 todos: todos
@@ -21,12 +27,17 @@ class TodoController {
 
     public async getOne(req: Request, res: Response): Promise<any> {
         try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
             if (!req.params.id || isNaN(Number(req.params.id))) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "id is required",
                 }).end();
             }
-            const todo: TodoType | null = await TodoModel.getById(Number(req.params.id));
+            const todo: TodoType | null = await TodoModel.getById(Number(req.params.id), req.user.id);
             if (!todo) {
                 return res.status(HttpStatus.NOT_FOUND).json({
                     message: "todo not found",
@@ -46,6 +57,11 @@ class TodoController {
 
     public async create(req: Request, res: Response): Promise<any> {
         try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
             if (!req.body.title) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "title is required",
@@ -58,7 +74,8 @@ class TodoController {
 
             const newTodo: Todo | null = await TodoModel.create({
                 title: req.body.title,
-                description: req.body.description
+                description: req.body.description,
+                user_id: req.user.id
             });
 
             if (!newTodo) {
@@ -81,6 +98,11 @@ class TodoController {
 
     public async update(req: Request, res: Response): Promise<any> {
         try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
             if (!req.params.id || isNaN(Number(req.params.id))) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "id is required",
@@ -102,7 +124,8 @@ class TodoController {
             const updatedTodo: Todo | null = await TodoModel.update(Number(req.params.id), {
                 title: req.body.title,
                 description: req.body.description,
-                completed: req.body.completed
+                completed: req.body.completed,
+                user_id: req.user.id
             });
 
             if (!updatedTodo) {
@@ -125,13 +148,19 @@ class TodoController {
 
     public async complete(req: Request, res: Response): Promise<any> {
         try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
+
             if (!req.params.id || isNaN(Number(req.params.id))) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "id is required",
                 }).end();
             }
 
-            const completedTodo: Todo | null = await TodoModel.complete(Number(req.params.id));
+            const completedTodo: Todo | null = await TodoModel.complete(Number(req.params.id), req.user.id);
 
             if (!completedTodo) {
                 return res.status(HttpStatus.NOT_FOUND).json({
@@ -153,6 +182,12 @@ class TodoController {
 
     public async delete(req: Request, res: Response): Promise<any> {
         try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
+
             if (!req.params.id || isNaN(Number(req.params.id))) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "id is required",
@@ -160,14 +195,14 @@ class TodoController {
 
             }
 
-            const todo: Todo | null = await TodoModel.getById(Number(req.params.id));
+            const todo: Todo | null = await TodoModel.getById(Number(req.params.id), req.user.id);
             if (!todo) {
                 return res.status(HttpStatus.NOT_FOUND).json({
                     message: "todo not found",
                 }).end();
             }
 
-            await TodoModel.delete(Number(req.params.id));
+            await TodoModel.delete(Number(req.params.id), req.user.id);
 
             return res.status(HttpStatus.NO_CONTENT).end();
         } catch (e) {

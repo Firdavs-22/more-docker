@@ -25,7 +25,7 @@ class Database {
         }
     }
 
-    public async query<T>(text: string, params?: any[]): Promise<T[]> {
+    public async query<T>(text: string, params: any[] = []): Promise<T[]> {
         if (!this.client) {
             logger.info("Connecting to client");
             await this.connect();
@@ -59,6 +59,7 @@ const DB = new Database();
             title VARCHAR(255) NOT NULL,
             description TEXT DEFAULT '',
             completed BOOLEAN DEFAULT FALSE NOT NULL,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW(),
             completed_at TIMESTAMP DEFAULT NULL
