@@ -18,20 +18,16 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
     }).end()
 });
 
-// ⭕️added the logger it s winston with daily rotation
-// ⭕️add the error handler
-// ⭕️add alias for folders in tsconfig
-// ⭕️change code to controller pattern
-// ⭕️move test to src folder and do in ts
-// fix the readme file
+// ⭕️add jwt authorization
+// ⭕create new table for users
+// ⭕add the auth controller
+// ⭕add the auth routes
+// ⭕add the user model
+// ⭕️add the auth middleware
+// ⭕add the user controller
+// ⭕add the user routes
+// change todo to use the user
 
-
-// add jwt authorization
-// create new table for users
-// add the user service
-// add the user controller
-// add the user routes
-// add the user model
 // change code to use socket.io
 // add the socket service
 // add the chat for users
@@ -40,5 +36,8 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // add the message controller
 // add the message routes
 
+// add the validate request service
+// add the response service
+// fix the structure of the project
 
 export default app;
