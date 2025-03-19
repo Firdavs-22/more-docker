@@ -1,34 +1,46 @@
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
+const customFormat = winston.format.printf((args) => {
+    const { level, message, timestamp, ...meta } = args
+    return `[${timestamp}] ${level}: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
+});
+
 const transports = [];
 
+transports.push(
+    new winston.transports.Console({
+        format: winston.format.combine(
+            winston.format.timestamp({
+                format: 'YYYYMMDD-HHmmss'
+            }),
+            customFormat
+        )
+    })
+);
 if (process.env.NODE_ENV !== 'test') {
     transports.push(
-        new winston.transports.Console({
-            format: winston.format.combine(
-                winston.format.colorize(),
-                winston.format.simple()
-            )
-        }),
         new winston.transports.DailyRotateFile({
-            filename: 'application-%DATE%.log',
-            datePattern: 'YYYY-MM-DD',
+            filename: '%DATE%.log',
+            datePattern: 'YYYYMMDD',
             dirname: 'logs',
             maxFiles: '14d'
         })
     );
-} else {
-    transports.push(new winston.transports.Console({
-        silent: true
-    }));
 }
 
+// transports.push(new winston.transports.Console({
+//     silent: true
+// }));
+
+
 const logger = winston.createLogger({
-    level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+    level: 'debug',
     format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
+        winston.format.timestamp({
+            format: 'YYYYMMDD-HHmmss'
+        }),
+        customFormat
     ),
     transports
 });

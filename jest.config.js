@@ -13,7 +13,8 @@ module.exports = {
         '@routes': '<rootDir>/src/routes/',
         '^@utils/(.*)$': '<rootDir>/src/utils/$1',
         '^@controllers/(.*)$': '<rootDir>/src/controllers/$1',
-        '^@/(.*)$': '<rootDir>/src/$1'
+        '^@/(.*)$': '<rootDir>/src/$1',
+        '^@middlewares/(.*)$': '<rootDir>/src/middlewares/$1',
     }
 }
 
