@@ -26,7 +26,8 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕️add the auth middleware
 // ⭕add the user controller
 // ⭕add the user routes
-// change todo to use the user
+// ⭕change to todo_use the user
+// ⭕fix the test code of todo_
 
 // change code to use socket.io
 // add the socket service

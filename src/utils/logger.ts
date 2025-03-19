@@ -32,7 +32,7 @@ if (process.env.NODE_ENV !== 'test') {
 // transports.push(new winston.transports.Console({
 //     silent: true
 // }));
-
+//
 
 const logger = winston.createLogger({
     level: 'debug',

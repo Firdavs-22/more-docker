@@ -54,7 +54,7 @@ class TodoModel {
 
     public async delete(id: number, user_id: number): Promise<void> {
         const query = 'DELETE FROM todos WHERE id = $1 AND user_id = $2;';
-        await db.query(query, [id]);
+        await db.query(query, [id, user_id]);
     }
 }
 
