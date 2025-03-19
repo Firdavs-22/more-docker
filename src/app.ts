@@ -33,12 +33,18 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // add the socket service
 // add the chat for users
 // create new table for messages
-// add the message service
+// add the message model
 // add the message controller
 // add the message routes
+
+// add the cache service
+
+// rewrite frontend code to Vue
+// Change place frontend code in other port or other container
 
 // add the validate request service
 // add the response service
 // fix the structure of the project
 
+// add the camera support service
 export default app;
