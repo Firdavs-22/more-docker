@@ -30,13 +30,17 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕fix the test code of todo_
 // ⭕create new table for messages
 // ⭕add the chat model
-// add the message controller
-// add the message routes
-// add the chat for users
+// ⭕️add the message controller
+// ⭕add the message routes
+
+// add the test for chat
+// add the checking from database in auth middleware
+
 // change code to use socket.io
 // add the socket service
 
 // add the cache service
+// save user auth in cache
 
 // rewrite frontend code to Vue
 // Change place frontend code in other port or other container

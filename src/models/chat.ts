@@ -16,10 +16,22 @@ export interface ChatUpdate {
     user_id: number;
 }
 
+export interface ChatUsername extends Chat {
+    username: string;
+}
+
 class ChatModel {
     public async getAll(): Promise<Chat[]>{
         const query = 'SELECT * FROM chats ORDER BY created_at DESC;';
         return await db.query<Chat>(query);
+    }
+
+    public async getAllWithUsername(): Promise<ChatUsername[]> {
+        const query = `SELECT ch.id,ch.message,ch.user_id,ch.created_at,ch.updated_at,us.username 
+            FROM chats AS ch 
+            JOIN users AS us ON ch.user_id = us.id 
+        ORDER BY ch.created_at DESC;`;
+        return await db.query<ChatUsername>(query);
     }
 
     public async getById(id: number, user_id:number): Promise<Chat|null> {
