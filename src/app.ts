@@ -18,32 +18,17 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
     }).end()
 });
 
-// ⭕️add jwt authorization
-// ⭕create new table for users
-// ⭕add the auth controller
-// ⭕add the auth routes
-// ⭕add the user model
-// ⭕️add the auth middleware
-// ⭕add the user controller
-// ⭕add the user routes
-// ⭕change to todo_use the user
-// ⭕fix the test code of todo_
-// ⭕create new table for messages
-// ⭕add the chat model
-// ⭕️add the message controller
-// ⭕add the message routes
 
 // add the test for chat
 // add the checking from database in auth middleware
-
-// change code to use socket.io
-// add the socket service
-
 // add the cache service
 // save user auth in cache
+// rewrite a readme
 
 // rewrite frontend code to Vue
 // Change place frontend code in other port or other container
+// change code to use socket.io
+// add the socket service
 
 // add the validate request service
 // add the response service
