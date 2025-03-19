@@ -65,6 +65,7 @@ const DB = new Database();
             completed_at TIMESTAMP DEFAULT NULL
         );
     `;
+
     const userQuery = `
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
@@ -76,11 +77,21 @@ const DB = new Database();
         );
     `;
 
+    const chatQuery = `
+        CREATE TABLE IF NOT EXISTS chats (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW()
+        );
+    `;
+
     try {
         await DB.createTable(userQuery);
-        logger.info("Users table created if it didn't exist");
         await DB.createTable(todoQuery);
-        logger.info("Todos table created if it didn't exist");
+        await DB.createTable(chatQuery);
+        logger.info("Tables Created if it didn't exist");
     } catch (e) {
         logger.error("Error creating todos table", e);
     }

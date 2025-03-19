@@ -28,14 +28,13 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕add the user routes
 // ⭕change to todo_use the user
 // ⭕fix the test code of todo_
-
-// change code to use socket.io
-// add the socket service
-// add the chat for users
-// create new table for messages
-// add the message model
+// ⭕create new table for messages
+// ⭕add the chat model
 // add the message controller
 // add the message routes
+// add the chat for users
+// change code to use socket.io
+// add the socket service
 
 // add the cache service
 
