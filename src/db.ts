@@ -53,7 +53,7 @@ class Database {
 const DB = new Database();
 
 (async () => {
-    const query = `
+    const todoQuery = `
         CREATE TABLE IF NOT EXISTS todos (
             id SERIAL PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
@@ -64,9 +64,21 @@ const DB = new Database();
             completed_at TIMESTAMP DEFAULT NULL
         );
     `;
+    const userQuery = `
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW()
+        );
+    `;
 
     try {
-        await DB.createTable(query);
+        await DB.createTable(userQuery);
+        logger.info("Users table created if it didn't exist");
+        await DB.createTable(todoQuery);
         logger.info("Todos table created if it didn't exist");
     } catch (e) {
         logger.error("Error creating todos table", e);
