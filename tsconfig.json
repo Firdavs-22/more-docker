@@ -36,9 +36,15 @@
       ],
       "@app": [
         "./src/app"
-      ]
+      ],
+        "@middlewares": [
+            "./src/middlewares"
+        ]
     }
   },
+  "files": [
+    "./src/types.d.ts"
+  ],
   "include": [
     "src"
   ]
