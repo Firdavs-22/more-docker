@@ -15,7 +15,7 @@ class ChatController {
             const chats = await ChatModel.getAllWithUsername();
             return res.status(HttpStatus.OK).json({
                 message: 'Success',
-                data: chats
+                chats: chats
             }).end();
         } catch (error) {
             logger.error(error);
@@ -44,7 +44,7 @@ class ChatController {
 
             return res.status(HttpStatus.OK).json({
                 message: 'Success',
-                data: chat
+                chat: chat
             }).end();
         } catch (error) {
             logger.error(error);
@@ -94,7 +94,7 @@ class ChatController {
 
             return res.status(HttpStatus.OK).json({
                 message: 'Success',
-                data: chat
+                chat: chat
             }).end();
         } catch (error) {
             logger.error(error);

@@ -19,7 +19,7 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 });
 
 
-// add the test for chat
+// ⭕️add the test for chat
 // add the checking from database in auth middleware
 // add the cache service
 // save user auth in cache
