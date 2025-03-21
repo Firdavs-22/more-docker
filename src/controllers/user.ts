@@ -24,7 +24,9 @@ class UserController {
 
             const user = await UserModel.getById(req.user.id);
             if (!user) {
-                return res.status(HttpStatus.NOT_FOUND).end();
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: "User not found"
+                }).end();
             }
             return res.status(HttpStatus.OK).json({
                 message: "User retrieved successfully",
@@ -54,7 +56,9 @@ class UserController {
 
             const user = await UserModel.update(req.user.id, {username});
             if (!user) {
-                return res.status(HttpStatus.NOT_FOUND).end();
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: "User not found"
+                }).end();
             }
             return res.status(HttpStatus.OK).json({
                 message: "User updated successfully",
@@ -78,7 +82,9 @@ class UserController {
 
             const user = await UserModel.getById(req.user.id);
             if (!user) {
-                return res.status(HttpStatus.NOT_FOUND).end();
+                return res.status(HttpStatus.NOT_FOUND).json({
+                    message: "User not found"
+                }).end();
             }
 
             await UserModel.delete(req.user.id);

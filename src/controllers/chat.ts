@@ -67,13 +67,6 @@ class ChatController {
                 }).end();
             }
 
-            const userExist = await UserModel.getById(req.user.id);
-            if (!userExist) {
-                return res.status(HttpStatus.UNAUTHORIZED).json({
-                    message: 'Unauthorized'
-                }).end();
-            }
-
             const chatExist = await ChatModel.getById(Number(id), req.user.id);
             if (!chatExist) {
                 return res.status(HttpStatus.NOT_FOUND).json({
@@ -110,13 +103,6 @@ class ChatController {
                 }).end()
             }
             const {id} = req.params;
-
-            const userExist = await UserModel.getById(req.user.id);
-            if (!userExist) {
-                return res.status(HttpStatus.UNAUTHORIZED).json({
-                    message: 'Unauthorized'
-                }).end();
-            }
 
             const chatExist = await ChatModel.getById(Number(id), req.user.id);
             if (!chatExist) {

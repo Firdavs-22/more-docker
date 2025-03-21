@@ -3,7 +3,7 @@ import {HttpStatus} from "@enums/httpStatus";
 import {verifyToken} from "@utils/jwt";
 
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): any => {
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const authHeader = req.header("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
