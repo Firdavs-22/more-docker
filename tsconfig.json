@@ -37,9 +37,15 @@
       "@app": [
         "./src/app"
       ],
-        "@middlewares": [
-            "./src/middlewares"
-        ]
+      "@middlewares": [
+        "./src/middlewares"
+      ],
+      "@services": [
+        "./src/services"
+      ],
+      "@cache": [
+        "./src/services/redis"
+      ],
     }
   },
   "files": [
