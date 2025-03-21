@@ -16,6 +16,12 @@ export const userExistMiddleware = async (req: Request, res: Response, next: Nex
         }).end();
     }
 
+    if (!user.token) {
+        return res.status(HttpStatus.UNAUTHORIZED).json({
+            message: "Unauthorized"
+        }).end();
+    }
+
     req.user.username = user.username;
 
     next();

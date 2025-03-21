@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import logger from "@logger";
 import {HttpStatus} from "@enums/httpStatus";
 import UserModel, {User, UserResponse} from "@models/user";
+import cache from "@cache"
 
 class UserController {
     public userResponse = (user: User): UserResponse  =>{
@@ -85,6 +86,10 @@ class UserController {
                 return res.status(HttpStatus.NOT_FOUND).json({
                     message: "User not found"
                 }).end();
+            }
+
+            if (user.token) {
+                await cache.delete(user.token);
             }
 
             await UserModel.delete(req.user.id);

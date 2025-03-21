@@ -27,7 +27,7 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕️add the test for chat
 // ⭕add the checking from database in auth middleware
 // ⭕add the cache service it be redis
-// save user auth in cache
+// ⭕save user auth in cache
 // rewrite a readme
 
 // rewrite frontend code to Vue

@@ -4,6 +4,7 @@ import {HttpStatus} from "@enums/httpStatus";
 import UserModel, {User, UserResponse} from "@models/user";
 import {hashPassword,comparePassword} from "@utils/password"
 import {generateToken} from "@utils/jwt";
+import cache from "@cache";
 
 class AuthController {
     public userResponse = (user: User): UserResponse  =>{
@@ -44,14 +45,27 @@ class AuthController {
                     message: "Error on create user"
                 }).end();
             }
+            const token = generateToken({
+                id: user.id,
+                email: user.email,
+                username: user.username
+            })
+
+            await UserModel.login({
+                user_id: user.id,
+                token: token
+            })
+
+            await cache.set(token, JSON.stringify({
+                id: user.id,
+                email: user.email,
+                username: user.username
+            }), 60 * 60);
+
             res.status(HttpStatus.CREATED).json({
                 message: "User created successfully",
                 user: this.userResponse(user),
-                token: generateToken({
-                    id: user.id,
-                    email: user.email,
-                    username: user.username
-                })
+                token: token
             })
         } catch (error) {
             logger.error("Error on register user", error);
@@ -83,15 +97,27 @@ class AuthController {
                 }).end();
             }
 
+            const token = generateToken({
+                id: user.id,
+                email: user.email,
+                username: user.username
+            })
+
+            await UserModel.login({
+                user_id: user.id,
+                token: token
+            })
+
+            await cache.set(token, JSON.stringify({
+                id: user.id,
+                email: user.email,
+                username: user.username
+            }), 60 * 60);
 
             res.status(HttpStatus.OK).json({
                 message: "User logged in successfully",
                 user: this.userResponse(user),
-                token: generateToken({
-                    id: user.id,
-                    email: user.email,
-                    username: user.username
-                })
+                token: token
             })
         } catch (error) {
             logger.error("Error on login user", error);

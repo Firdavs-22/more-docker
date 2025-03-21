@@ -129,4 +129,9 @@ describe("Todo API", () => {
         const response = await request(app).delete(`/api/user/`).set("Authorization", `Bearer ${user.token}`);
         expect(response.status).toBe(HttpStatus.NO_CONTENT);
     });
+
+    it('should return 404 not found when getting all todos with deleted token', async () => {
+        const response = await request(app).get("/api/todos").set("Authorization", `Bearer ${user.token}`);
+        expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    });
 });

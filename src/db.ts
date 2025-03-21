@@ -53,6 +53,19 @@ class Database {
 const DB = new Database();
 
 (async () => {
+    const userQuery = `
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            token TEXT DEFAULT NULL,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW(),
+            last_login_at TIMESTAMP DEFAULT NULL
+        );
+    `;
+
     const todoQuery = `
         CREATE TABLE IF NOT EXISTS todos (
             id SERIAL PRIMARY KEY,
@@ -63,17 +76,6 @@ const DB = new Database();
             created_at TIMESTAMP DEFAULT NOW(),
             updated_at TIMESTAMP DEFAULT NOW(),
             completed_at TIMESTAMP DEFAULT NULL
-        );
-    `;
-
-    const userQuery = `
-        CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT NOW(),
-            updated_at TIMESTAMP DEFAULT NOW()
         );
     `;
 

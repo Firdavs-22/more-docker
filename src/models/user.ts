@@ -5,8 +5,10 @@ export interface User {
     email: string;
     username: string;
     password: string;
-    created_at: Date;
-    updated_at: Date;
+    token: string | null;
+    created_at: string;
+    updated_at: string;
+    last_login_at: string;
 }
 export interface Register {
     email: string;
@@ -17,8 +19,8 @@ export interface Update {
     username: string;
 }
 export interface Login {
-    email: string;
-    password: string;
+    user_id: number;
+    token: string;
 }
 export interface UserResponse {}
 
@@ -35,9 +37,9 @@ class UserModel {
         return result.length ? result[0] : null;
     }
 
-    public async getLogin(login: Login): Promise<User|null> {
-        const query = 'SELECT * FROM users WHERE email = $1 AND password = $2;';
-        const result = await db.query<User>(query, [login.email, login.password]);
+    public async login(login: Login): Promise<User|null> {
+        const query = 'UPDATE users SET token = $1, last_login_at = NOW() WHERE id = $2 RETURNING *;';
+        const result = await db.query<User>(query, [login.token, login.user_id]);
         return result.length ? result[0] : null;
     }
 
