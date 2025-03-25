@@ -66,15 +66,11 @@ class TodoController {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "title is required",
                 }).end();
-            } else if (!req.body.description) {
-                return res.status(HttpStatus.BAD_REQUEST).json({
-                    message: "description is required",
-                }).end();
             }
 
             const newTodo: Todo | null = await TodoModel.create({
                 title: req.body.title,
-                description: req.body.description,
+                description: req.body.description || "",
                 user_id: req.user.id
             });
 
@@ -111,11 +107,7 @@ class TodoController {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "title is required",
                 }).end();
-            } else if (!req.body.description) {
-                return res.status(HttpStatus.BAD_REQUEST).json({
-                    message: "description is required",
-                }).end();
-            } else if (req.body.completed === undefined) {
+            }  else if (req.body.completed === undefined) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "completed is required",
                 }).end();
@@ -123,7 +115,7 @@ class TodoController {
 
             const updatedTodo: Todo | null = await TodoModel.update(Number(req.params.id), {
                 title: req.body.title,
-                description: req.body.description,
+                description: req.body.description || "",
                 completed: req.body.completed,
                 user_id: req.user.id
             });

@@ -41,7 +41,7 @@ class TodoModel {
     }
 
     public async update(id: number, todo: TodoUpdate): Promise<Todo|null> {
-        const query = 'UPDATE todos SET title = $1, description = $2, completed = $3, updated_at = NOW() WHERE id = $4 AND user_id = $5 RETURNING *;';
+        const query = 'UPDATE todos SET title = $1, description = $2, completed = $3, updated_at = NOW(), completed_at = NULL WHERE id = $4 AND user_id = $5 RETURNING *;';
         const result = await db.query<Todo>(query, [todo.title, todo.description, todo.completed, id, todo.user_id]);
         return result.length ? result[0] : null;
     }
