@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "More using Docker Project",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
@@ -33,6 +34,7 @@
   "dependencies": {
     "@jest/globals": "^29.7.0",
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.14.0",

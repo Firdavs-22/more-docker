@@ -19,11 +19,17 @@ class AuthController {
 
     public register = async (req: Request, res: Response): Promise<any>  =>{
         try {
-            const {email, username, password} = req.body;
+            const {email, username, password,password_confirmation} = req.body;
 
-            if (!email || !username || !password) {
+            if (!email || !username || !password || !password_confirmation) {
                 return res.status(HttpStatus.BAD_REQUEST).json({
                     message: "Missing required fields"
+                }).end();
+            }
+
+            if (password !== password_confirmation) {
+                return res.status(HttpStatus.BAD_REQUEST).json({
+                    message: "Passwords do not match"
                 }).end();
             }
 
