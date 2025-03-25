@@ -1,11 +1,15 @@
 import express, {NextFunction,Request,Response} from 'express';
-import ApiRoutes from '@routes';
 import path from 'path';
+import cors from 'cors';
+import ApiRoutes from '@routes';
 import logger from "@logger";
 import cache from '@cache';
-const app = express();
-app.use(express.json());
 
+const app = express();
+
+
+app.use(express.json());
+app.use(cors());
 app.use('/api', ApiRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,17 +27,11 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
     }).end()
 });
 
-
-// ⭕️add the test for chat
-// ⭕add the checking from database in auth middleware
-// ⭕add the cache service it be redis
-// ⭕save user auth in cache
-// rewrite a readme
-
-// rewrite frontend code to Vue
+// ⭕️rewrite frontend code to Vue
 // Change place frontend code in other port or other container
 // change code to use socket.io
 // add the socket service
+// rewrite a readme
 
 // add the saving response in cache
 // add the validate request service
