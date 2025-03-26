@@ -32,7 +32,7 @@ export interface UserInfo {
 
 class UserModel {
     public async all(): Promise<UserInfo[]> {
-        const query = 'SELECT id, username, email, last_login_at FROM users;';
+        const query = 'SELECT id, username, email, last_login_at FROM users ORDER BY last_login_at DESC;';
         const result = await db.query<UserInfo>(query);
         return result;
     }
