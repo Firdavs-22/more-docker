@@ -13,13 +13,15 @@ describe("User API", () => {
         email: 'johndoe@gmail.com',
         username: "JohnDoe",
         password: 'password',
+        password_confirmation: 'password',
         token: "",
     }
     it('should register a new user', async () => {
         const response = await request(app).post('/api/auth/register').send({
             email: user.email,
             username: user.username,
-            password: user.password
+            password: user.password,
+            password_confirmation: user.password_confirmation
         });
         expect(response.status).toBe(HttpStatus.CREATED);
         expect(response.body.user).toHaveProperty("id");
@@ -39,7 +41,8 @@ describe("User API", () => {
         const response = await request(app).post('/api/auth/register').send({
             email: user.email,
             username: user.username,
-            password: user.password
+            password: user.password,
+            password_confirmation: user.password_confirmation
         });
         expect(response.status).toBe(HttpStatus.CONFLICT);
     });
@@ -79,12 +82,19 @@ describe("User API", () => {
     });
 
     it('should invalid token when get info',async () => {
-        const response = await request(app).get('/api/user/').set('Authorization', `Bearer invalidtoken`);
+        const response = await request(app).get('/api/user/me').set('Authorization', `Bearer invalidtoken`);
         expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
     });
 
-    it('should return user info', async () => {
+    it('should return users list',async () => {
         const response = await request(app).get('/api/user/').set('Authorization', `Bearer ${user.token}`);
+        expect(response.status).toBe(HttpStatus.OK);
+        expect(Array.isArray(response.body.users)).toBe(true);
+        expect(response.body.users.length).toBeGreaterThan(1);
+    });
+
+    it('should return user info', async () => {
+        const response = await request(app).get('/api/user/me').set('Authorization', `Bearer ${user.token}`);
         expect(response.status).toBe(HttpStatus.OK);
         expect(response.body.user).toHaveProperty("id", user.id);
         expect(response.body.user).toHaveProperty("email", user.email);
@@ -92,7 +102,7 @@ describe("User API", () => {
     });
 
     it('should return unauthorized', async () => {
-        const response = await request(app).get('/api/user/');
+        const response = await request(app).get('/api/user/me');
         expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
     });
 

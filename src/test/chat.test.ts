@@ -12,6 +12,7 @@ describe("Chat API", () => {
         id: 0,
         username: "John Doe",
         password: "password",
+        password_confirmation: "password",
         email: "john@gmail.com",
         token: "",
         chat: {
@@ -23,6 +24,7 @@ describe("Chat API", () => {
         id: 0,
         username: "Jane Doe",
         password: "password",
+        password_confirmation: "password",
         email: "jane@gmail.com",
         token: "",
         chat: {
@@ -38,14 +40,24 @@ describe("Chat API", () => {
     });
 
     it("should register user 1", async () => {
-        const response = await request(app).post("/api/auth/register").send(user1);
+        const response = await request(app).post("/api/auth/register").send({
+            email: user1.email,
+            username: user1.username,
+            password: user1.password,
+            password_confirmation: user1.password_confirmation
+        });
         expect(response.status).toBe(HttpStatus.CREATED);
         user1.id = response.body.user.id;
         user1.token = response.body.token;
     });
 
     it("should register user 2", async () => {
-        const response = await request(app).post("/api/auth/register").send(user2);
+        const response = await request(app).post("/api/auth/register").send({
+            email: user2.email,
+            username: user2.username,
+            password: user2.password,
+            password_confirmation: user2.password_confirmation
+        });
         expect(response.status).toBe(HttpStatus.CREATED);
         user2.id = response.body.user.id;
         user2.token = response.body.token;

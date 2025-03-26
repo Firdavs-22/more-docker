@@ -13,6 +13,7 @@ describe("Todo API", () => {
         username: "test",
         email: "test-todo@gmail.com",
         password: "test-todo",
+        password_confirmation: "test-todo",
         token: ""
     }
     let todo = {
@@ -29,7 +30,8 @@ describe("Todo API", () => {
         const response = await request(app).post("/api/auth/register").send({
             username: user.username,
             email: user.email,
-            password: user.password
+            password: user.password,
+            password_confirmation: user.password_confirmation
         });
         expect(response.status).toBe(HttpStatus.CREATED);
         expect(response.body).toHaveProperty("token");
