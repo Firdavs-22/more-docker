@@ -15,6 +15,27 @@ class UserController {
         }
     }
 
+    public all = async (req: Request, res: Response): Promise<any> => {
+        try {
+            if (!req.user) {
+                return res.status(HttpStatus.UNAUTHORIZED).json({
+                    message: "Unauthorized"
+                }).end();
+            }
+
+            const users = await UserModel.all();
+            return res.status(HttpStatus.OK).json({
+                message: "Users retrieved successfully",
+                users: users
+            }).end();
+        } catch (error) {
+            logger.error("Error on get all users", error);
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                message: "Internal server error"
+            }).end()
+        }
+    }
+
     public getUser = async (req: Request, res: Response): Promise<any> => {
         try {
             if (!req.user) {

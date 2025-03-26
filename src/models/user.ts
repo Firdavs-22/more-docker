@@ -23,8 +23,20 @@ export interface Login {
     token: string;
 }
 export interface UserResponse {}
+export interface UserInfo {
+    id: number;
+    email: string;
+    username: string;
+    last_login_at: string;
+}
 
 class UserModel {
+    public async all(): Promise<UserInfo[]> {
+        const query = 'SELECT id, username, email, last_login_at FROM users;';
+        const result = await db.query<UserInfo>(query);
+        return result;
+    }
+
     public async getById(id: number): Promise<User|null> {
         const query = 'SELECT * FROM users WHERE id = $1;';
         const result = await db.query<User>(query, [id]);

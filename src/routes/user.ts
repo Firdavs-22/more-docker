@@ -7,7 +7,8 @@ const router = Router();
 router.use(authMiddleware);
 router.use(userExistMiddleware)
 
-router.get('/', userController.getUser);
+router.get('/', userController.all);
+router.get('/me', userController.getUser);
 router.put('/', userController.updateUser);
 router.delete('/', userController.deleteUser);
 
