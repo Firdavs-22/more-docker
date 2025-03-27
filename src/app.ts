@@ -32,11 +32,11 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 // ⭕change code to use socket.io
 // ⭕add the socket service
 // ⭕change chat message to be paginated
-// fix chat controller
+// ⭕fix chat controller
 // ⭕remove the chat router
+// ⭕️add the delete message
 // add on todoApi the search
 // add the userApi the search
-// add the delete message and update message
 
 // rewrite a readme
 // add the saving response in cache

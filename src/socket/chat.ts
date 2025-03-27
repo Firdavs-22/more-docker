@@ -37,7 +37,7 @@ const socketChatHandlers = (io: Server, socket: Socket) => {
     socket.on("getAllMessages", async () => {
         try {
             const chats = await chatController.getAll();
-            socket.emit("allMessages", chats);
+            socket.emit("allMessages", chats.reverse());
         } catch (error) {
             logger.error("Error fetching messages", error);
             socket.emit("error", "Internal server error");
@@ -47,7 +47,7 @@ const socketChatHandlers = (io: Server, socket: Socket) => {
     socket.on("nextMessages", async (last_id: number) => {
         try {
             const chats = await chatController.getAll(last_id)
-            socket.emit("nextMessages", chats);
+            socket.emit("nextMessages", chats.reverse());
         } catch (error) {
             logger.error("Error fetching messages paginate", error);
             socket.emit("error", "Internal server error");
