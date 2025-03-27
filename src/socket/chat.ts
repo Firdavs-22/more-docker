@@ -1,5 +1,5 @@
 import {Server, Socket} from "socket.io";
-import chatModel from "@models/chat";
+import chatController from "@controllers/chat";
 import logger from "@logger";
 
 const socketChatHandlers = (io: Server, socket: Socket) => {
@@ -14,10 +14,7 @@ const socketChatHandlers = (io: Server, socket: Socket) => {
                 return socket.emit("error", "Message is required");
             }
 
-            const chat = await chatModel.create({
-                user_id: user.id,
-                message: message
-            })
+            const chat = await chatController.create(user.id, message);
             if (!chat) {
                 return socket.emit("error", "Internal Server Error");
             }
@@ -30,9 +27,9 @@ const socketChatHandlers = (io: Server, socket: Socket) => {
                 updated_at: chat.updated_at,
                 username: user.username
             }
-
             io.emit("newMessage", send);
-        } catch (e) {
+        }
+        catch (e) {
             logger.error("Socket Error sending message", e);
             socket.emit("error", "Internal Server Error");
         }
@@ -40,13 +37,24 @@ const socketChatHandlers = (io: Server, socket: Socket) => {
 
     socket.on("getAllMessages", async () => {
         try {
-            const chats = await chatModel.getAllWithUsername();
+            const chats = await chatController.getAll();
             socket.emit("allMessages", chats);
-        } catch (error) {
+        }
+        catch (error) {
             logger.error("Error fetching messages", error);
             socket.emit("error", "Internal server error");
         }
     });
+
+    socket.on("nextMessages", async (last_id: number) => {
+        try {
+            const chats = await chatController.getAll(last_id)
+            socket.emit("nextMessages", chats);
+        }  catch (error) {
+            logger.error("Error fetching messages paginate", error);
+            socket.emit("error", "Internal server error");
+        }
+    })
 }
 
 export default socketChatHandlers;

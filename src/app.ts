@@ -28,14 +28,21 @@ app.use<any>((err: unknown, _req:Request, res:Response, _next:NextFunction) => {
 });
 
 // ⭕️rewrite frontend code to Vue
-// Change place frontend code in other port or other container
-// change code to use socket.io
-// add the socket service
-// rewrite a readme
+// ⭕Change place frontend code in other port or other container
+// ⭕change code to use socket.io
+// ⭕add the socket service
+// ⭕change chat message to be paginated
+// fix chat controller
+// ⭕remove the chat router
+// add on todoApi the search
+// add the userApi the search
+// add the delete message and update message
 
+// rewrite a readme
 // add the saving response in cache
 // add the validate request service
 // add the response service
+// integrate the frontend with the backend
 // fix the structure of the project
 
 // add the camera support service

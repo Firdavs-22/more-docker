@@ -30,8 +30,17 @@ class ChatModel {
         const query = `SELECT ch.id,ch.message,ch.user_id,ch.created_at,ch.updated_at,us.username 
             FROM chats AS ch 
             JOIN users AS us ON ch.user_id = us.id 
-        ORDER BY ch.created_at ASC;`;
+        ORDER BY ch.id DESC LIMIT 20;`;
         return await db.query<ChatUsername>(query);
+    }
+
+    getAllWithUsernamePaginated = async (last_id: number): Promise<ChatUsername[]> => {
+        const query = `SELECT ch.id,ch.message,ch.user_id,ch.created_at,ch.updated_at,us.username 
+            FROM chats AS ch 
+            JOIN users AS us ON ch.user_id = us.id
+        WHERE ch.id < $1
+        ORDER BY ch.created_at DESC LIMIT 20;`;
+        return await db.query<ChatUsername>(query, [last_id]);
     }
 
     public async getById(id: number, user_id:number): Promise<Chat|null> {
