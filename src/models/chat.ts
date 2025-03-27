@@ -43,9 +43,9 @@ class ChatModel {
         return await db.query<ChatUsername>(query, [last_id]);
     }
 
-    public async getById(id: number, user_id:number): Promise<Chat|null> {
-        const query = 'SELECT * FROM chats WHERE id = $1 AND user_id = $2;';
-        const result = await db.query<Chat>(query, [id, user_id]);
+    public async getById(id: number): Promise<Chat|null> {
+        const query = 'SELECT * FROM chats WHERE id = $1;';
+        const result = await db.query<Chat>(query, [id]);
         return result.length ? result[0] : null;
     }
 
