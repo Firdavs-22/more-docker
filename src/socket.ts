@@ -14,18 +14,26 @@ const initializeSocket = (server: http.Server) => {
     io.use(socketAuth);
 
     io.on("connection", (socket) => {
-        logger.info(`New client connected: ${socket.id}`);
+        const user = socket.data.user;
+        logger.info(`New client connected: ${socket.data.user.username}`);
+
+        io.emit("userConnected", {
+            id: user.id,
+            username: user.username
+        });
 
         socket.on("disconnect", () => {
             logger.info(`Client disconnected: ${socket.id}`);
+            io.emit("userDisconnected", {
+                id: user.id,
+                username: user.username
+            });
         });
 
         socket.on("message", (message) => {
             logger.info(`Message received: ${message}`);
             io.emit("message", message);
         });
-
-
 
         socketChatHandlers(io, socket);
     })
